@@ -24,8 +24,12 @@ jobs:
     - name: Install pnpm
       run: |
         npm install -g pnpm
-        export PATH="$(npm bin -g):$PATH"
-        
+        # Adding the npm bin directory to the PATH
+        echo "::add-path::$(npm bin -g)"
+    
+    - name: Verify pnpm installation
+      run: pnpm --version
+
     - name: Install dependencies
       run: |
         pnpm install
