@@ -15,11 +15,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        cache: 'pnpm'
+
     - name: Install pnpm
       run: npm install -g pnpm
 
-    - name: Set pnpm in PATH
-      run: echo "::set-env name=PATH::$(npm bin -g):$PATH"
+    - name: Add pnpm to PATH
+      run: echo "PATH=$(npm bin -g):$PATH" >> $GITHUB_ENV
 
     - name: Verify pnpm installation
       run: pnpm --version
@@ -38,9 +44,3 @@ jobs:
 
     - name: Run tests
       run: pnpm test
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-        cache: 'pnpm'
